@@ -34,13 +34,11 @@ CALL add_room('ALR 2', 10, 12, 9);
 SELECT * FROM Updates;
 SELECT * FROM Employees;
 	-- junior change capacity
-	CALL change_capacity(30, 10, 10, 5, current_date); -- throws you are not a manager
-	-- senior change capacity
-	CALL change_capacity(27, 10, 10, 5, current_date); -- throws you are not a manager
+	CALL change_capacity(25, 10, 10, 5, current_date); -- throws you are not a manager
 	-- manager change capacity
-	CALL change_capacity(26, 10, 10, 5, current_date); --  success ALR
-	CALL change_capacity(26, 10, 11, 5, current_date); --  success ALR1
-	CALL change_capacity(26, 12, 10, 5, current_date); --  success ALR2
+	CALL change_capacity(21, 10, 10, 5, current_date); --  success ALR
+	CALL change_capacity(21, 10, 11, 5, current_date); --  success ALR1
+	CALL change_capacity(21, 10, 12, 5, current_date); --  success ALR2
 
 
  -- declare health
@@ -77,10 +75,11 @@ SELECT * FROM non_compliance(current_date, current_date + 1); -- sorts in decrea
 	-- senior : eid 27
 	-- manager : eid 26
 	
+	CALL search_room();
 	-- Junior tries to book a room
-		CALL book_room(10,10, current_date, 12, 13, 29); -- throws eid.. is not a manager
+		CALL book_room(10,10, current_date, 7, 13, 21); -- throws eid.. is not a manager
 	-- Senior books a room
-		CALL book_room(10,10, current_date, 12, 14, 27); -- throws no health declaration
+		CALL book_room(10,10, current_date, 12, 14, 27); -- not a senior or manager
 		CALL declare_health(27, current_date, 36.5);
 		-- success book
 	-- Manager books a room with fever
@@ -125,7 +124,7 @@ SELECT * FROM non_compliance(current_date, current_date + 1); -- sorts in decrea
 	CALL unbook_room(10, 10, current_date, 12, 13, 1);
 	
 -- if meeting is not approved, and correct booker eid
-	CALL unbook_room(10, 10, current_date, 12, 13, 27); -- time slot for 13 - 14 still there, expected.
+	CALL unbook_room(1, 1, current_date, 7, 12, 21); -- time slot for 13 - 14 still there, expected.
  -- if meeting is approved
 	CALL unbook_room(10, 10, current_date, 15, 17, 26);  -- only left with one entry from 17 - 18, expected
  -- viewing booking report
